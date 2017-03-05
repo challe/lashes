@@ -7,7 +7,7 @@ import { Customer } from '../models/customer';
 
 @Injectable()
 export class CustomerService {
-  private heroesUrl = 'http://localhost:5000/api/customers';  // URL to web API
+  private heroesUrl = 'http://192.168.0.5/api/customers';  // URL to web API
   constructor (private http: Http) {}
   
     getCustomers (): Observable<Customer[]> {
