@@ -1,6 +1,6 @@
 import { MsbPage } from './app.po';
 
-describe('msb App', function() {
+describe('App', function() {
   let page: MsbPage;
 
   beforeEach(() => {
@@ -9,6 +9,6 @@ describe('msb App', function() {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('Kunder:');
   });
 });

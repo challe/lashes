@@ -5,6 +5,17 @@ var runSequence = require('run-sequence');
 var Server = require('karma').Server;
 var del = require('del');
 var gutil = require('gulp-util');
+var sftp = require('gulp-sftp');
+ 
+gulp.task('publish', function () {
+    return gulp.src('dist/*')
+        .pipe(sftp({
+            host: '192.168.0.5',
+            user: 'publish',
+            pass: 'pub123!',
+            remotePath: '/var/www/lashes'
+        }));
+});
 
 gutil.log = gutil.noop;
 
@@ -15,6 +26,7 @@ gulp.task('release', function (callback) {
         'e2e-test',
         'clean',
         'ng-build',
+        'publish',
         function (error) {
             if (error) {
                 console.log(error.message);
@@ -51,16 +63,3 @@ gulp.task("tslint", () =>
         }))
         .pipe(tslint.report())
 );
-
-gulp.task('publish', function() {
-  return gulp.src('**/*.js')
-  .pipe(scp({
-    host: 'localhost',
-    username: 'username',
-    password: 'password',
-    dest: '/home/username/'
-  }))
-  .on('error', function(err) {
-    console.log(err);
-  });
-});

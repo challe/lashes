@@ -1,5 +1,5 @@
-import { Injectable }              from '@angular/core';
-import { Http, Response }          from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -9,7 +9,7 @@ import { Customer } from '../models/customer';
 export class CustomerService {
   private heroesUrl = 'http://192.168.0.5/api/customers';  // URL to web API
   constructor (private http: Http) {}
-  
+
     getCustomers (): Observable<Customer[]> {
     return this.http.get(this.heroesUrl)
                     .map(this.extractData)
@@ -17,7 +17,7 @@ export class CustomerService {
   }
 
   private extractData(res: Response) {
-    let body = res.json();
+    const body = res.json();
     return body || { };
   }
   private handleError (error: Response | any) {
