@@ -1,36 +1,29 @@
+/// <reference path="service.ts" />
+
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Service } from './service';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Customer } from '../models/customer';
+import { AppSettings } from '../appSettings';
 
 @Injectable()
-export class CustomerService {
-  private heroesUrl = 'http://192.168.0.5/api/customers';  // URL to web API
-  constructor (private http: Http) {}
+export class CustomerService extends Service {
+  constructor (private http: Http) {
+    super();
+  }
 
-    getCustomers (): Observable<Customer[]> {
-    return this.http.get(this.heroesUrl)
+  getCustomers (): Observable<Customer[]> {
+    return this.http.get(AppSettings.API_ENDPOINT + '/customers')
                     .map(this.extractData)
                     .catch(this.handleError);
   }
 
-  private extractData(res: Response) {
-    const body = res.json();
-    return body || { };
-  }
-  private handleError (error: Response | any) {
-    // In a real world app, we might use a remote logging infrastructure
-    let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
+  getCustomer (id: number): Observable<Customer> {
+    return this.http.get(AppSettings.API_ENDPOINT + '/customers/' + id)
+                    .map(this.extractData)
+                    .catch(this.handleError);
   }
 }
