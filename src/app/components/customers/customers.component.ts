@@ -25,4 +25,13 @@ export class CustomersComponent implements OnInit {
   getCustomer(id: number) {
     this.customerService.getCustomer(id).subscribe(customer => this.customer = customer);
   }
+
+  addCustomer(newCustomer: string) {
+    if (newCustomer) {
+      this.customerService.addCustomer(newCustomer).subscribe(customer => {
+        this.customer = customer;
+        this.customers.push(customer);
+      });
+    }
+  }
 }

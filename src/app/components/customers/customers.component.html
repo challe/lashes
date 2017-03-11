@@ -4,6 +4,8 @@
     <ul>
       <li (click)="getCustomer(customer.id)" *ngFor="let customer of customers">{{customer.name}}</li>
     </ul>
+
+    <input #newCustomer (keyup.enter)="addCustomer(newCustomer.value)">
   </div>
   <div class="col-9">
     <h3>{{customer?.name}}</h3>
