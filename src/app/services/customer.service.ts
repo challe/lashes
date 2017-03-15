@@ -36,4 +36,10 @@ export class CustomerService extends Service {
                     .map(this.extractData)
                     .catch(this.handleError);
   }
+
+  deleteCustomer(id: number): Observable<Customer> {
+    return this.http.delete(AppSettings.API_ENDPOINT + '/customers/' + id)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
 }

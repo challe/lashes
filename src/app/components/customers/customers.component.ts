@@ -15,7 +15,6 @@ export class CustomersComponent implements OnInit {
   constructor(private customerService: CustomerService) {}
   ngOnInit() {
     this.getCustomers();
-    this.getCustomer(3);
   }
 
   getCustomers() {
@@ -33,5 +32,17 @@ export class CustomersComponent implements OnInit {
         this.customers.push(customer);
       });
     }
+  }
+
+  deleteCustomer(id: number) {
+    this.customerService.deleteCustomer(id).subscribe(customer => {
+      let idToRemove: number;
+      for(let i = 0; i < this.customers.length; i++) {
+        if(this.customers[i].id == customer.id) {
+          idToRemove = i;
+        }
+      }
+      this.customers.splice(idToRemove, 1);
+    });
   }
 }

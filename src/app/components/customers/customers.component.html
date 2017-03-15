@@ -1,13 +1,28 @@
 <div class="row">
-  <div class="col-3">
-    <h3>Kunder</h3>
-    <ul>
-      <li (click)="getCustomer(customer.id)" *ngFor="let customer of customers">{{customer.name}}</li>
-    </ul>
-
-    <input #newCustomer (keyup.enter)="addCustomer(newCustomer.value)">
+  <div class="col-12">
+    <h4>Lägg till ny kund</h4>
+    <input placeholder="Namn" #newCustomer (keyup.enter)="addCustomer(newCustomer.value)">
+    <button type="button" (click)="addCustomer(newCustomer.value)" class="btn btn-success">Lägg till</button>
   </div>
-  <div class="col-9">
+  <div class="col-12">
+    <h3>Kunder</h3>
+    <table class="customers">
+      <tr>
+        <th>Namn</th>
+        <th>Ta bort</th>
+      </tr>
+
+      <tr *ngFor="let customer of customers">
+        <td>
+          <span class="pointer" (click)="getCustomer(customer.id)">{{customer.name}}</span>
+        </td>
+        <td>
+          <button type="button" class="pointer btn btn-danger" (click)="deleteCustomer(customer.id)">Ta bort</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-12">
     <h3>{{customer?.name}}</h3>
   </div>
 </div>
