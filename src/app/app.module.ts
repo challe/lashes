@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 
 import { CustomersComponent } from './components/customers/customers.component';
 import { HomeComponent } from './components/home/home.component';
+import { AppointmentsComponent } from './components/appointments/appointments.component';
 
 import { routing } from './app.routing';
 
@@ -14,7 +15,8 @@ import { routing } from './app.routing';
   declarations: [
     AppComponent,
     HomeComponent,
-    CustomersComponent
+    CustomersComponent,
+    AppointmentsComponent
   ],
   imports: [
     NgbModule.forRoot(),

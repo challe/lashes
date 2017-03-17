@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-12">
+    <h4>Lägg till ny bokning</h4>
+    <label for="customer">Kund</label>
+    <select class="form-control" id="customer" required [(ngModel)]="newAppointment.customerID">
+      <option *ngFor="let customer of customers" [value]="customer.id">{{customer.name}}</option>
+    </select>
+
+    <label for="appointment-types">Typ</label>
+    <select class="form-control" required [(ngModel)]="newAppointment.appointmentTypeId" (change)="updateToTime()">
+      <option *ngFor="let appointmentType of appointmentTypes" [value]="appointmentType.id">{{appointmentType.name}}</option>
+    </select>
+
+    <label for="appointment-types">Dag och tid</label><br>
+    <input type="datetime-local" name="from_time" [(ngModel)]="newAppointment.fromTime" (change)="updateToTime()">
+    <br><br>
+    <button type="button" (click)="addAppointment()" class="btn btn-success">Lägg till</button>
+    <br><br>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <h3>Bokningar</h3>
+    <table class="appointments">
+      <tr>
+        <th>Namn</th>
+        <th>När</th>
+      </tr>
+
+      <tr *ngFor="let appointment of appointments">
+        <td>
+          <span class="pointer">{{appointment.customer.name}}</span>
+        </td>
+        <td>
+          {{appointment.fromTime}}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
