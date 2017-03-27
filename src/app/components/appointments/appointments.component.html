@@ -12,12 +12,34 @@
     </select>
 
     <label for="appointment-types">Dag och tid</label><br>
-    <input type="datetime-local" name="from_time" [(ngModel)]="newAppointment.fromTime" (change)="updateToTime()">
-    <br><br>
+    <input class="form-control" type="datetime-local" name="from_time" [(ngModel)]="newAppointment.fromTime" (change)="updateToTime()">
+    <br>
+  </div>
+</div>
+
+<div class="row align-items-center" *ngFor="let appointmentLash of newAppointment.appointmentLashes">
+  <div class="col-4">
+    <label>Kurva</label>
+      <select class="form-control" [(ngModel)]="appointmentLash.curve">
+        <option *ngFor="let curve of curves" [value]="curve">{{curve}}</option>
+      </select>
+  </div>
+  <div class="col-4">
+    <label>Längd</label>
+    <select class="form-control" [(ngModel)]="appointmentLash.length">
+      <option *ngFor="let length of lengths" [value]="length">{{length}}</option>
+    </select>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <button type="button" (click)="addAppointmentLash()" class="btn btn-success">Lägg till franstyp</button><br>
     <button type="button" (click)="addAppointment()" class="btn btn-success">Lägg till</button>
     <br><br>
   </div>
 </div>
+
 <div class="row">
   <div class="col-12">
     <h3>Bokningar</h3>
@@ -25,6 +47,7 @@
       <tr>
         <th>Namn</th>
         <th>När</th>
+        <th>Ta bort</th>
       </tr>
 
       <tr *ngFor="let appointment of appointments">
@@ -33,6 +56,9 @@
         </td>
         <td>
           {{appointment.fromTime}}
+        </td>
+        <td>
+          <button type="button" class="pointer btn btn-danger" (click)="deleteAppointment(appointment.id)">Ta bort</button>
         </td>
       </tr>
     </table>

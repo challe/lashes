@@ -10,6 +10,7 @@ import { Customer } from './../../models/customer';
 })
 export class CustomersComponent implements OnInit {
   customers: Customer[];
+  newCustomer: Customer = new Customer();
   customer: Customer;
 
   constructor(private customerService: CustomerService) {}
@@ -25,13 +26,11 @@ export class CustomersComponent implements OnInit {
     this.customerService.getCustomer(id).subscribe(customer => this.customer = customer);
   }
 
-  addCustomer(newCustomer: string) {
-    if (newCustomer) {
-      this.customerService.addCustomer(newCustomer).subscribe(customer => {
-        this.customer = customer;
-        this.customers.push(customer);
-      });
-    }
+  addCustomer() {
+    this.customerService.addCustomer(this.newCustomer).subscribe(customer => {
+      this.customer = customer;
+      this.customers.push(customer);
+    });
   }
 
   deleteCustomer(id: number) {

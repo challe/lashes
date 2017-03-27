@@ -5,6 +5,7 @@ import { AppointmentTypesService } from './../../services/appointment-type.servi
 import { Appointment } from './../../models/appointment';
 import { AppointmentType } from './../../models/appointment-type';
 import { Customer } from './../../models/customer';
+import { AppointmentLash } from './../../models/appointment-lash';
 
 @Component({
   selector: 'app-appointments',
@@ -18,6 +19,8 @@ export class AppointmentsComponent implements OnInit {
   newAppointment: Appointment = new Appointment();
   customers: Customer[];
   appointmentTypes: AppointmentType[];
+  curves: string[];
+  lengths: number[];
 
   constructor(private appointmentService: AppointmentService,
     private customerService: CustomerService,
@@ -28,12 +31,19 @@ export class AppointmentsComponent implements OnInit {
     this.getAppointments();
     this.getCustomers();
     this.getAppointmentTypes();
+    this.getCurves();
+    this.getLengths();
   }
 
   initNewAppointment() {
     this.newAppointment.fromTime = new Date().toISOString().slice(0, 16);
     this.newAppointment.appointmentTypeId = 2;
+    this.addAppointmentLash();
     this.updateToTime();
+  }
+
+  addAppointmentLash() {
+    this.newAppointment.appointmentLashes.push(new AppointmentLash());
   }
 
   updateToTime() {
@@ -49,6 +59,14 @@ export class AppointmentsComponent implements OnInit {
     }
     
     this.newAppointment.toTime = ToTime.toISOString().slice(0, 16);
+  }
+
+  getCurves() {
+    this.curves = ["C", "D"];
+  }
+
+  getLengths() {
+    this.lengths = [8,9,10,11,12,13,14,15];
   }
 
   getAppointmentTypes() {

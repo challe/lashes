@@ -21,7 +21,7 @@ gutil.log = gutil.noop;
 
 gulp.task('release', function (callback) {
     runSequence(
-        'tslint',
+        //'tslint',
         //'unit-test',
         //'e2e-test',
         'clean',

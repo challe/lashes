@@ -28,10 +28,7 @@ export class CustomerService extends Service {
                     .catch(this.handleError);
   }
 
-  addCustomer(name: string): Observable<Customer> {
-    const customer: Customer = new Customer();
-    customer.name = name;
-
+  addCustomer(customer: Customer): Observable<Customer> {
     return this.http.post(AppSettings.API_ENDPOINT + '/customers/', JSON.stringify(customer), {headers: this.headers})
                     .map(this.extractData)
                     .catch(this.handleError);

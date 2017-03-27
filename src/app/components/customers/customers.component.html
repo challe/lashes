@@ -1,20 +1,25 @@
 <div class="row">
   <div class="col-12">
     <h4>Lägg till ny kund</h4>
-    <input placeholder="Namn" #newCustomer (keyup.enter)="addCustomer(newCustomer.value)">
-    <button type="button" (click)="addCustomer(newCustomer.value)" class="btn btn-success">Lägg till</button>
+    <input placeholder="Namn" [(ngModel)]="newCustomer.name">
+    <input placeholder="Telefonnummer" [(ngModel)]="newCustomer.phoneNumber">
+    <button type="button" (click)="addCustomer()" class="btn btn-success">Lägg till</button>
   </div>
   <div class="col-12">
     <h3>Kunder</h3>
     <table class="customers">
       <tr>
         <th>Namn</th>
+        <th>Telefonnummer</th>
         <th>Ta bort</th>
       </tr>
 
       <tr *ngFor="let customer of customers">
         <td>
           <span class="pointer" (click)="getCustomer(customer.id)">{{customer.name}}</span>
+        </td>
+        <td>
+          {{customer.phoneNumber}}
         </td>
         <td>
           <button type="button" class="pointer btn btn-danger" (click)="deleteCustomer(customer.id)">Ta bort</button>
