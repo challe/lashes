@@ -1,33 +1,59 @@
-<div class="row">
-  <div class="col-12">
-    <h4>Lägg till ny kund</h4>
-    <input placeholder="Namn" [(ngModel)]="newCustomer.name">
-    <input placeholder="Telefonnummer" [(ngModel)]="newCustomer.phoneNumber">
-    <button type="button" (click)="addCustomer()" class="btn btn-success">Lägg till</button>
-  </div>
-  <div class="col-12">
-    <h3>Kunder</h3>
-    <table class="customers">
-      <tr>
-        <th>Namn</th>
-        <th>Telefonnummer</th>
-        <th>Ta bort</th>
-      </tr>
+<div class="content-container">
+  <nav class="sidenav">
+    <section class="sidenav-content">
+        <a class="nav-link active">
+            Översikt
+        </a>
+    </section>
+  </nav>
 
-      <tr *ngFor="let customer of customers">
-        <td>
-          <span class="pointer" (click)="getCustomer(customer.id)">{{customer.name}}</span>
-        </td>
-        <td>
-          {{customer.phoneNumber}}
-        </td>
-        <td>
-          <button type="button" class="pointer btn btn-danger" (click)="deleteCustomer(customer.id)">Ta bort</button>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <div class="col-12">
-    <h3>{{customer?.name}}</h3>
+  <div class="content-area">
+      <div class="btn-group">
+        <button (click)="addCustomerOpened = true" type="button" class="btn btn-sm btn-secondary"><clr-icon shape="plus"></clr-icon> Lägg till ny kund</button>
+      </div>
+
+      <clr-datagrid>
+        <clr-dg-column>ID</clr-dg-column>
+        <clr-dg-column [(clrDgSorted)]="sorted" [clrDgField]="'name'">Namn</clr-dg-column>
+        <clr-dg-column>Telefonnummer</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let customer of customers" [clrDgItem]="customer">
+          <clr-dg-action-overflow>
+              <!--<button class="action-item" (click)="onEdit(customer)">Redigera</button>-->
+              <button class="action-item" (click)="deleteCustomer(customer)">Ta bort</button>
+          </clr-dg-action-overflow>
+          <clr-dg-cell>{{customer.id}}</clr-dg-cell>
+          <clr-dg-cell class="pointer" (click)="showCustomer(customer)">{{customer.name}}</clr-dg-cell>
+          <clr-dg-cell>{{customer.phoneNumber}}</clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>
+          {{customers.length}} kunder
+          <clr-dg-pagination #pagination [clrDgPageSize]="5"></clr-dg-pagination>
+        </clr-dg-footer>
+    </clr-datagrid>
   </div>
 </div>
+
+<clr-modal [(clrModalOpen)]="addCustomerOpened">
+    <h3 class="modal-title">Lägg till ny kund</h3>
+    <div class="modal-body">
+      <input placeholder="Namn" [(ngModel)]="newCustomer.name">
+      <input placeholder="Telefonnummer" [(ngModel)]="newCustomer.phoneNumber">
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="addCustomerOpened = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="addCustomer()">Ok</button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="opened">
+    <h3 class="modal-title">{{customer?.name}}</h3>
+    <div class="modal-body">
+        <p>But not much to say...</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="opened = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="opened = false">Ok</button>
+    </div>
+</clr-modal>

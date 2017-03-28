@@ -9,13 +9,22 @@ import { Customer } from './../../models/customer';
   providers: [CustomerService]
 })
 export class CustomersComponent implements OnInit {
-  customers: Customer[];
+  customers: Customer[] = new Array<Customer>();
   newCustomer: Customer = new Customer();
   customer: Customer;
+  opened: boolean = false;
+  addCustomerOpened: boolean = false;
 
-  constructor(private customerService: CustomerService) {}
+  constructor(private customerService: CustomerService) {
+    this.customers.push(new Customer());
+  }
   ngOnInit() {
     this.getCustomers();
+  }
+
+  showCustomer(customer: Customer) {
+    this.customer = customer;
+    this.opened = true;
   }
 
   getCustomers() {
@@ -27,14 +36,16 @@ export class CustomersComponent implements OnInit {
   }
 
   addCustomer() {
+    this.addCustomerOpened = false;
     this.customerService.addCustomer(this.newCustomer).subscribe(customer => {
       this.customer = customer;
       this.customers.push(customer);
+      this.newCustomer = new Customer();
     });
   }
 
-  deleteCustomer(id: number) {
-    this.customerService.deleteCustomer(id).subscribe(customer => {
+  deleteCustomer(customer: Customer) {
+    this.customerService.deleteCustomer(customer).subscribe(customer => {
       let idToRemove: number;
       for(let i = 0; i < this.customers.length; i++) {
         if(this.customers[i].id == customer.id) {
